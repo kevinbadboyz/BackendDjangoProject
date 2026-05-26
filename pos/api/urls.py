@@ -15,8 +15,14 @@ urlpatterns = [
     path('api/v2.table-resto-info/<pk>', views.TableRestoInfoAPIView.as_view()),
 
     path('api/categories', views.CategoryListAPIView.as_view()),
+    path('api/category-create', views.CategoryCreateAPIView.as_view()),
     path('api/menu-restos', views.MenuRestoListAPIView.as_view()),
     path('api/menu-resto-filter/', views.MenuRestoFilterApi.as_view()),
+
+    path('api/order-list', views.OrderListApiView.as_view()),
+    path('api/order-create', views.OrderCreateApiView.as_view()),
+    path('api/order-info/<pk>', views.OrderInfoApiView.as_view()),
+    path('api/order-delete/<pk>', views.OrderDeleteApiView.as_view()),
 
     path('api/login', views.LoginView.as_view()),
     path('api/register', views.RegisterView.as_view()),

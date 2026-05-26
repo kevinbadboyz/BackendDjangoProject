@@ -3,10 +3,12 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.serializers import (
     RegisterUserSerializer,
-    TableRestoSerializer, CategorySerializer, MenuRestoSerializer,
-    MenuRestoFilterSerializer,
+    TableRestoSerializer, CategorySerializer, CategoryCreateSerializer, MenuRestoSerializer,
+    MenuRestoFilterSerializer, 
+    OrderCreateSerializer, OrderSerializer, OrderInfoSerializer,
+    OrderDetailCreateSerializer
 )
-from pos_app.models import TableResto, Category, MenuResto
+from pos_app.models import TableResto, Category, MenuResto, Order, OrderDetail
 from rest_framework import generics
 from .paginators import CustomPagination
 from rest_framework import filters
@@ -147,14 +149,18 @@ class TableRestoInfoAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = TableResto.objects.all()
     serializer_class = TableRestoSerializer
 
-class CategoryListAPIView(generics.ListCreateAPIView):
+class CategoryListAPIView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class CategoryCreateAPIView(generics.CreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryCreateSerializer
 
 class MenuRestoListAPIView(generics.ListCreateAPIView):
     queryset = MenuResto.objects.all()
     serializer_class = MenuRestoSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
 class MenuRestoFilterApi(generics.ListAPIView):
     queryset = MenuResto.objects.all()
@@ -163,4 +169,20 @@ class MenuRestoFilterApi(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['category__name']
     ordering_fields = ['created_on']
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
+
+class OrderListApiView(generics.ListAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class OrderCreateApiView(generics.CreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderCreateSerializer
+
+class OrderInfoApiView(generics.RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderInfoSerializer
+
+class OrderDeleteApiView(generics.DestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
